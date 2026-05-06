@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanghvi Storybooks</title>
+    <style>
+        body {
+            background-color: #fdfdfd;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            margin: 0;
+            font-family: 'Garamond', 'Baskerville', 'Hoefler Text', 'Times New Roman', serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 24px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 3em;
+            font-style: italic;
+            font-weight: normal;
+            color: #4a4a4a;
+            margin: 0 0 8px;
+            text-align: center;
+        }
+        .subtitle {
+            letter-spacing: 2px;
+            font-style: italic;
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .books {
+            width: 100%;
+            max-width: 900px;
+        }
+        .book-card {
+            background: #fff;
+            border: 1px solid #e6e6e6;
+            border-radius: 8px;
+            padding: 32px 36px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+        .book-card h2 {
+            font-size: 1.8em;
+            font-style: italic;
+            font-weight: normal;
+            color: #a86c6e;
+            margin: 0 0 6px;
+        }
+        .book-card .meta {
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        .book-card p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #444;
+            margin: 0 0 22px;
+        }
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .links a {
+            display: inline-block;
+            padding: 10px 18px;
+            border: 1px solid #c9b3b4;
+            color: #a86c6e;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-style: italic;
+            transition: background 0.15s, color 0.15s;
+        }
+        .links a:hover {
+            background: #a86c6e;
+            color: #fff;
+        }
+        footer {
+            margin-top: auto;
+            padding-top: 50px;
+            font-size: 13px;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sanghvi Storybooks</h1>
+    <div class="subtitle">A small library of stories</div>
+
+    <div class="books">
+        <div class="book-card">
+            <h2>Babies Having the Best Time</h2>
+            <div class="meta">A Mother's Day Story • 2026</div>
+            <p>For Heta — our anchor, our sunshine, our favorite place to be. A picture book, an animated flipbook, and the full film.</p>
+            <div class="links">
+                <a href="mothers-day-2026/index.html">Image Flipbook</a>
+                <a href="mothers-day-2026/video.html">Animated Flipbook</a>
+                <a href="mothers-day-2026/film.html">The Film</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 Sanghvi Family</footer>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babies Having the Best Time</title>
+    <style>
+        body {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Garamond', 'Baskerville', 'Hoefler Text', 'Times New Roman', serif;
+            overflow: hidden;
+        }
+        .flip-book {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none; /* hidden until initialized */
+        }
+        .page {
+            /* Very clean off-white paper look matching the screenshot */
+            background-color: #fdfdfd;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+            overflow: hidden;
+            box-sizing: border-box;
+            position: relative;
+            /* subtle page curve shadow on the spine side */
+            box-shadow: inset -2px 0 15px rgba(0,0,0,0.03);
+        }
+        .page.--left {
+            box-shadow: inset 2px 0 15px rgba(0,0,0,0.03);
+        }
+        .page-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            padding: 80px 70px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .page-cover {
+            background-color: #fdfdfd; 
+            color: #333;
+            box-shadow: none;
+            position: relative;
+        }
+        .page-cover .page-content {
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            justify-content: flex-start;
+            padding-top: 60px;
+        }
+        .page-cover h1 {
+            font-size: 3em; 
+            margin-bottom: 10px; 
+            font-style: italic; 
+            font-weight: normal;
+            color: #4a4a4a;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        }
+        .page-cover h2 {
+            letter-spacing: 2px;
+            font-style: italic;
+            font-weight: normal;
+            font-size: 20px;
+            color: #666;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+        }
+        .page-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .page-text {
+            font-size: 26px;
+            line-height: 1.7;
+            color: #1a1a1a;
+            z-index: 2;
+            width: 100%;
+        }
+        .page-text p {
+            margin: 0;
+        }
+        .page-header {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: #888;
+            text-transform: uppercase;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 15px;
+            color: #555;
+        }
+        
+        /* Left page specifics */
+        .page.--left .page-number {
+            left: 40px;
+            right: auto;
+        }
+        .page.--left .page-header {
+            left: 40px;
+            right: auto;
+        }
+        .top-nav {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 10;
+            font-size: 13px;
+            font-style: italic;
+        }
+        .top-nav a {
+            color: #666;
+            text-decoration: none;
+            margin-right: 14px;
+            border-bottom: 1px solid #bbb;
+            padding-bottom: 1px;
+        }
+        .top-nav a:hover { color: #222; border-bottom-color: #222; }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="../">Home</a>
+    <a href="video.html">Animated Flipbook</a>
+    <a href="film.html">The Film</a>
+</nav>
+
+<div id="book" class="flip-book">
+    <!-- Page 0: Front Cover -->
+    <div class="page page-cover">
+        <img src="images/cover.png" class="page-image" alt="Cover Art">
+        <div class="page-content" style="position: absolute; top: 10%; left: 0; width: 100%; align-items: center; text-align: center; padding: 0 40px;">
+            <h1 style="font-size: 3em; margin-bottom: 10px; font-style: italic; font-weight: normal; color: #4a4a4a; text-shadow: 2px 2px 4px rgba(255,255,255,0.9);">Babies Having the Best Time</h1>
+            <h2 style="letter-spacing: 2px; font-style: italic; font-weight: normal; font-size: 20px; color: #666; text-shadow: 1px 1px 3px rgba(255,255,255,0.9);">A Mother's Day Story • 2026</h2>
+        </div>
+    </div>
+    
+    <!-- Page 1: Inside Front Cover (Left side when opened) -->
+    <div class="page"></div>
+
+    <!-- Page 2: Title Page (Right side when opened) -->
+    <div class="page">
+        <div class="page-content" style="align-items: center; text-align: center;">
+            <h2 style="color: #a86c6e; font-style: italic; font-size: 36px; font-weight: normal; margin-bottom: 0;">For Heta</h2>
+            <p style="color: #666; font-size: 22px; margin-top: 20px; font-style: italic;">Our anchor, our sunshine, our favorite place to be.<br><br>Thank you for making every day<br>the best adventure.</p>
+        </div>
+    </div>
+
+    <!-- Spread 1 -->
+    <!-- Page 3: Image (Left) -->
+    <div class="page">
+        <img src="images/page-01.png" class="page-image" alt="The Morning Masterpiece">
+    </div>
+    <!-- Page 4: Text (Right) -->
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>Before the sun has fully woken,<br>
+                our favorite days have already spoken.<br>
+                With nimble hands and endless grace,<br>
+                you put a smile on every face.</p>
+            </div>
+            <div class="page-number">1</div>
+        </div>
+    </div>
+
+    <!-- Spread 2 -->
+    <div class="page">
+        <img src="images/page-02.png" class="page-image" alt="The Adventure Walk">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>Out the door and down the street,<br>
+                guiding the way for tiny feet.<br>
+                A sturdy stroll, a wobbly bike,<br>
+                making the neighborhood feel like a hike.</p>
+            </div>
+            <div class="page-number">2</div>
+        </div>
+    </div>
+
+    <!-- Spread 3 -->
+    <div class="page">
+        <img src="images/page-03.png" class="page-image" alt="The Workout Partner">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>You try to stretch, you try to bend,<br>
+                but you're our favorite climbing friend!<br>
+                A human bridge, a tunnel too,<br>
+                there's nothing that our mom can't do.</p>
+            </div>
+            <div class="page-number">3</div>
+        </div>
+    </div>
+
+    <!-- Spread 4 -->
+    <div class="page">
+        <img src="images/page-04.png" class="page-image" alt="The Super Mom Feat">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>With just two hands you do the work of ten,<br>
+                juggling the chaos again and again.<br>
+                A sip for one, a bite for the other,<br>
+                the magical skills of a super mother.</p>
+            </div>
+            <div class="page-number">4</div>
+        </div>
+    </div>
+
+    <!-- Spread 5 -->
+    <div class="page">
+        <img src="images/page-05.png" class="page-image" alt="The Backseat Symphony">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>When the road gets long and tears start to fall,<br>
+                you reach right back and rescue us all.<br>
+                A missing toy, a sudden snack,<br>
+                you always have exactly what we lack.</p>
+            </div>
+            <div class="page-number">5</div>
+        </div>
+    </div>
+
+    <!-- Spread 6 -->
+    <div class="page">
+        <img src="images/page-06.png" class="page-image" alt="The Turkish Trek">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>You take us far across the sea,<br>
+                to ancient lands and history.<br>
+                Through fairy chimneys and skies of gold,<br>
+                the greatest adventures unfold.</p>
+            </div>
+            <div class="page-number">6</div>
+        </div>
+    </div>
+
+    <!-- Spread 7 -->
+    <div class="page">
+        <img src="images/page-07.png" class="page-image" alt="Where Dreams Come True">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>To castles tall and magic mice,<br>
+                to the happiest places, not just once but twice.<br>
+                You show us the magic in the world out there,<br>
+                with Dad right beside you to lovingly share.</p>
+            </div>
+            <div class="page-number">7</div>
+        </div>
+    </div>
+
+    <!-- Spread 8 -->
+    <div class="page">
+        <img src="images/page-08.png" class="page-image" alt="Babies Having the Best Time">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>Under palm trees and tropical skies,<br>
+                watching the joy sparkle in our eyes.<br>
+                You clink your glass and soak up the sun,<br>
+                knowing our memories have only just begun.</p>
+            </div>
+            <div class="page-number">8</div>
+        </div>
+    </div>
+
+    <!-- Spread 9 -->
+    <div class="page">
+        <img src="images/page-09.png" class="page-image" alt="The Monkey Baby">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>When the day is done and the moon shines bright,<br>
+                you hold us close and squeeze us tight.<br>
+                Wrapped like a monkey, safe from harm,<br>
+                there's no better place than in your arms.</p>
+            </div>
+            <div class="page-number">9</div>
+        </div>
+    </div>
+
+    <!-- Spread 10 -->
+    <div class="page">
+        <img src="images/page-10.png" class="page-image" alt="The Bunk Bed Finale">
+    </div>
+    <div class="page">
+        <div class="page-header">Sanghvi Family</div>
+        <div class="page-content">
+            <div class="page-text">
+                <p>A final story, a softly glowing page,<br>
+                the sweetest ending to our daily stage.<br>
+                We love you so much, in every single way.<br>
+                Happy Mother's Day, today and every day.</p>
+            </div>
+            <div class="page-number">10</div>
+        </div>
+    </div>
+
+    <!-- Page 23: Inside Back Cover (Left) -->
+    <div class="page"></div>
+    
+    <!-- Page 24: Back Cover (Right) -->
+    <div class="page page-cover">
+        <div class="page-content" style="align-items: center; justify-content: center;">
+            <h2 style="margin-bottom: 0; font-style: italic; color: #4a4a4a !important;">With all our love,<br><br>Harshit, Nayra, and Hirva</h2>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const pageFlip = new St.PageFlip(document.getElementById('book'), {
+            width: 600, // Matching the 5:4 aspect ratio of our images
+            height: 480, 
+            size: "stretch",
+            minWidth: 315,
+            maxWidth: 1000,
+            minHeight: 252,
+            maxHeight: 800,
+            maxShadowOpacity: 0.5,
+            showCover: true,
+            mobileScrollSupport: true
+        });
+
+        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+        document.getElementById('book').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
